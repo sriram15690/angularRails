@@ -1,0 +1,54 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html  ng-app="app" lang="en">
+	<head>
+		<base href="/">
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+		<title>Sample App</title>
+		<link rel="shortcut icon" href="favicon.ico">
+		<%= csrf_meta_tag %>
+		<%= stylesheet_link_tag   "application" ,:media => "all" %>
+		<%= javascript_include_tag "application" %>
+	</head>
+
+	<body style="background-color:white">
+		<br>
+		<div id="main">
+			<div class="mainContent">
+				<div class="collapse navbar-collapse pull-right" ng-controller="NavCtrl">
+					<ul class="nav navbar-nav">
+
+						<li ng-hide="signedIn()">
+							<a href="/" class="but1" title="">Home</a>
+						</li>
+						<li ng-hide="signedIn()">
+							<a href="login">Log In</a>
+						</li>
+						<li ng-hide="signedIn()">
+							<a href="register">Register</a>
+						</li>
+						<li ng-show="signedIn()">
+							<a ng-bind="user.email" href="/"></a>
+						</li>
+						<li ng-show="signedIn()">
+							<a ng-click="logout()">Log Out</a>
+						</li>
+						<li ng-show="signedIn()">
+							<a href="/contacts">Contacts Home</a>
+						</li>
+						<li ng-show="signedIn()">
+							<a href="/contacts/new">New Contact</a>
+						</li>
+						<li ng-show="signedIn()">
+							<a href="/contacts">Contacts Home</a>
+						</li>
+					</ul>
+				</div>
+				<div class="clearAll"></div>
+
+				<div ng-view ></div>
+			</div>
+		</div>
+
+	</body>
+</html>
