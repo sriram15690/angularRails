@@ -4,7 +4,7 @@
 app.controller('MainHomeCtrl', ['$scope', '$routeParams', '$http', '$location','Auth',
 function($scope, $routeParams, $http, $location,Auth) {
 	$scope.newContactLnk = function() {
-		console.log("csame in ng click");
+		console.log('csame in ng click');
 		$location.path('contactsNew');
 	};
 	Auth.currentUser().then(function(user) {
@@ -14,6 +14,6 @@ function($scope, $routeParams, $http, $location,Auth) {
 		// => {id: 1, ect: '...'}
 	}, function(error) {
 		// unauthenticated error
-		console.log("Not Authenticated");
+		console.log('Not Authenticated');
 	});
 }]); 

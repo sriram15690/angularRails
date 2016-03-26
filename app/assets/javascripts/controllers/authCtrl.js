@@ -14,7 +14,7 @@ function($scope, $routeParams, $http, Auth) {
 		$scope.user = {};
 	});
 
-	console.log("in Nav ctrl");
+	console.log('in Nav ctrl');
 
 }]);
 

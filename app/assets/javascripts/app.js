@@ -40,6 +40,9 @@ function($routeProvider, $locationProvider, $stateProvider,AuthInterceptProvider
 	 // Intercept 401 Unauthorized everywhere
      AuthInterceptProvider.interceptAuth(true);
         
+}])
+.run(['$rootScope',function($rootScope){
+	$rootScope.count = 1;
 }]);
 
 /*

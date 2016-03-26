@@ -1,33 +1,54 @@
-app.controller('contactShowCtrl', ['$scope', '$routeParams', '$http', '$location', 'Auth',
-function($scope, $routeParams, $http, $location, Auth) {
+app.controller('contactShowCtrl', ['$scope', '$routeParams', '$http', '$location', 'Auth','ContactService', '$rootScope',
+function($scope, $routeParams, $http, $location, Auth,ContactService, $rootScope) {
 	Auth.currentUser().then(function(user) {
 		console.log(user);
 	}, function(error) {
-		console.log("Not Authenticated");
+		console.log('Not Authenticated');
 	});
-	$http({
-		method : 'GET',
-		url : '/contacts/' + $routeParams.id + '.json',
-	}).success(function(response) {
-		console.log(response);
-		$scope.contact = response;
-	}).error(function(data, status, headers, config) {
-		console.log(data);
-	});
+
+	// Using service to get data
+	ContactService.showContact($routeParams.id).then(
+		function(response){
+			$scope.contact = response;
+			console.log('Root Scope var '+$rootScope.count);
+			$rootScope.count += 1;
+			console.log('After Root Scope var '+$rootScope.count);
+		},
+		function(response){
+			if(response.error == 'Server Error') {
+				alert('Server Error');
+			} 
+			else if (response.error == 'Validation Error'){
+				alert('Validation Error');
+			}	
+		});
+
+	// Below code is commented as Service has been used above.
+	// $http({
+	// 	method : 'GET',
+	// 	url : '/contacts/' + $routeParams.id + '.json',
+	// }).success(function(response) {
+	// 	console.log(response);
+	// 	$scope.contact = response;
+	// }).error(function(data, status, headers, config) {
+	// 	console.log(data);
+	// });
 }]);
 
-app.controller('contactEditCtrl', ['$scope', '$routeParams', '$http', '$location', 'Auth', 'Contact',
-function($scope, $routeParams, $http, $location, Auth, Contact) {
 
+app.controller('contactEditCtrl', ['$scope', '$routeParams', '$http', '$location', 'Auth', 'Contact', '$rootScope',
+function($scope, $routeParams, $http, $location, Auth, Contact, $rootScope) {
+	console.log('In Edit ctrl Root Scope var '+$rootScope.count);
+	$rootScope.count += 1;
 	$scope.contact = Contact.get({
 		id : $routeParams.id
 	});
 
-	//	$scope.contact = new Contact();
+	// $scope.contact = new Contact();
 	//updateContact = this.contact;
 
 	$scope.submitContact = function() {
-/*
+	/*
 		$http({
 			method : 'PUT',
 			url : '/contacts/' + $routeParams.id + '.json',
@@ -40,24 +61,24 @@ function($scope, $routeParams, $http, $location, Auth, Contact) {
 		}).error(function(data, status, headers, config) {
 			console.log(data);
 		});
- */
+ 	*/
 		 Contact.update({
-		 id : $routeParams.id
-		 }, $scope.contact, function(response) {
-		 	console.log(response);
-		 	$location.path("/contacts/" + $routeParams.id);
-		 });
+			 id : $routeParams.id
+		}, $scope.contact, function(response) {
+			 			console.log(response);
+			 			$location.path('/contacts/' + $routeParams.id);
+		 		});
 		
 	};
 }]);
 
 app.controller('newContactCtrl', ['$scope', '$routeParams', '$http', '$location', 'Auth', 'Contact',
 function($scope, $routeParams, $http, $location, Auth, Contact) {
-	console.log("newContactCtrl");
+	console.log('newContactCtrl');
 	Auth.currentUser().then(function(user) {
 		console.log(user);
 	}, function(error) {
-		console.log("/");
+		console.log('/');
 	});
 
 	$scope.contact = new Contact();
@@ -66,7 +87,7 @@ function($scope, $routeParams, $http, $location, Auth, Contact) {
 		newContact = this.contact;
 		console.log(newContact);
 		Contact.save(newContact, function(response) {
-			$location.path("/");
+			$location.path('/');
 		});
 	};
 
@@ -74,30 +95,30 @@ function($scope, $routeParams, $http, $location, Auth, Contact) {
 
 app.controller('navigationCtrl', ['$scope', '$routeParams', '$http', '$location',
 function($scope, $routeParams, $http, $location) {
-	console.log("navigationCtrl");
+	console.log('navigationCtrl');
 }]);
 
 app.controller('contactHomeCtrl', ['$scope', '$http', '$resource',
 function($scope, $http, $resource) {
 	$scope.mainGridOptions = {
-		toolbar : ["excel"],
+		toolbar : ['excel'],
 		excel : {
-			fileName : "Kendo UI Grid Export.xlsx",
+			fileName : 'Kendo UI Grid Export.xlsx',
 			//proxyURL : "http://demos.telerik.com/kendo-ui/service/export",
 			filterable : true
 		},
 		dataSource : {
-			type : "odata",
+			type : 'odata',
 			transport : {
 				read : {
-					url : "/contacts/get_all_contacts.json",
-					dataType : "json"
+					url : '/contacts/get_all_contacts.json',
+					dataType : 'json'
 				}
 			},
 			pageSize : 20,
 			schema : {
-				data : "results",
-				total : "pageSize"
+				data : 'results',
+				total : 'pageSize'
 			}
 		},
 
@@ -110,34 +131,34 @@ function($scope, $http, $resource) {
 			buttonCount : 5
 		},
 		columns : [{
-			field : "name",
-			title : "Name",
-			width : "200px"
+			field : 'name',
+			title : 'Name',
+			width : '200px'
 		}, {
-			field : "mobile_num",
-			title : "mobile_num",
-			width : "200px"
+			field : 'mobile_num',
+			title : 'mobile_num',
+			width : '200px'
 		}, {
-			field : "status",
-			title : "status",
-			width : "200px"
+			field : 'status',
+			title : 'status',
+			width : '200px'
 		}, {
-			field : "city",
-			title : "city",
-			width : "200px"
+			field : 'city',
+			title : 'city',
+			width : '200px'
 		}, {
-			field : "membership",
+			field : 'membership',
 			width : 150
 		}, {
-			field : "URL",
+			field : 'URL',
 			template : '<a class="btn btn-primary" href="/contacts/#=id#/edit">Edit</a>',
-			title : " ",
-			width : "100px"
+			title : ' ',
+			width : '100px'
 		}, {
-			field : "URL",
+			field : 'URL',
 			template : '<a class="btn btn-primary" href="/contacts/#=id#/">View Details</a>',
-			title : " ",
-			width : "100px"
+			title : ' ',
+			width : '100px'
 		}]
 	};
 
