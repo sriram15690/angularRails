@@ -81,7 +81,10 @@ function($scope, $routeParams, $http, $location, Auth, Contact) {
 		console.log('/');
 	});
 
-	$scope.contact = new Contact();
+	$scope.contact = new Contact({
+		"name": "",
+		"mobile_num": ""
+	});
 
 	$scope.submitContact = function() {
 		newContact = this.contact;
@@ -90,6 +93,28 @@ function($scope, $routeParams, $http, $location, Auth, Contact) {
 			$location.path('/');
 		});
 	};
+
+	
+	$scope.getSeries = function (series) {
+		if ($scope.contact.mobile_num) {
+			var series = $scope.contact.mobile_num.substr(0,4);
+			if ( series== "9963") {
+				$scope.contact.name = "AIRTEL AP"
+			}else if (series == "9952") {
+				$scope.contact.name = "AIRTEL TN"
+			}else if (series == "9912") {
+				$scope.contact.name = "IDEA AP"
+			}else {
+				$scope.contact.name = "";	
+			}
+		}else {
+			$scope.contact.name = "";
+		}								
+	}
+
+	$scope.$watch(function () {
+		return $scope.contact.mobile_num;
+	}, $scope.getSeries); 
 
 }]);
 

@@ -1,4 +1,4 @@
-(function() {
+(	function() {
 	var app;
 	app = angular.module('app.services', ['ngResource']);
 

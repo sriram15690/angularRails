@@ -1,16 +1,21 @@
 <div>
-	<form ng-submit="submitContact()" id="edit_contact" class="contactForm ng-pristine ng-valid" >
-		<div class="form-group">
-			<label>Name <span class="redStar">*</span></label>
-			<input class="form-control"  ng-model="contact.name" type="text" id="contact_name" name="contact[name]" required="required">
-		</div>
+	<form ng-submit="submitContact()" id="edit_contact" ng-model="contact" class="contactForm ng-pristine ng-valid" >
+		<text-box labelname="Admin Access Text Box" user-role="Admin" isrequired="true" value="contact.mobile_num"></text-box>
+
+		<text-box labelname="Normal User Access Text Box" user-role="User" isrequired="false" value=""></text-box>
+
+		<text-box labelname="Name" user-role="Admin" isrequired="true" value="contact.name"></text-box>
 		<div class="form-group">
 			<label>Email (To Receive Updates)</label>
-			<input   class="form-control" ng-model="contact.email"type="text" id="contact_email" name="contact[email]">
+			<input class="form-control" ng-model="contact.email"type="text" id="contact_email" name="contact[email]">
 		</div>
+		
+		<text-box labelname="Mobile Num Dir" user-role="Admin" isrequired="true" value="contact.mobile_num"></text-box>
+	
+
 		<div class="form-group">
 			<label>Mobile Number <span class="redStar">*</span></label>
-			<input   class="form-control number" ng-model="contact.mobile_num" type="text" id="contact_mobile_num" name="contact[mobile_num]" required="required" >
+			<input ng-change="getSeries()" class="form-control number" ng-model="contact.mobile_num" type="text" id="contact_mobile_num" name="contact[mobile_num]" required="required" >
 		</div>
 
 		<div class="form-group">
