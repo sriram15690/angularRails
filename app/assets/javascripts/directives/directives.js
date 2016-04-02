@@ -60,4 +60,12 @@ app.directive('textBox', function() {
 			elem.addClass(className);
 		}
 	}
+}).directive('sampledir', function () {
+	return {
+		//restrict: 'E',
+		transclude: true,
+		template: function(elem, attrs) {
+			return '<p>This is a sample Directive</p>';
+		}
+	}
 });

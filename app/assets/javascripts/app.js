@@ -1,5 +1,5 @@
 var app;
-app = angular.module('app', ["ui.router","ngRoute", "ngResource", "Devise","app.services", "kendo.directives"]);
+app = angular.module('app', ["ui.router","ngRoute", "ngResource", "Devise","app.services"]);
 
 app.config(['$routeProvider', '$locationProvider', '$stateProvider','AuthInterceptProvider',
 function($routeProvider, $locationProvider, $stateProvider,AuthInterceptProvider) {
